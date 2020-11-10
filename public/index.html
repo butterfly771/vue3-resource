@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    首页
+    <div id="app"></div>
+    <div id="app1"></div>
+    <div id="root"></div>
+
+
+    <script src="/dist/vue.js"></script>
+
+    <!-- vue响应式数据原理 -->
+    <script>
+        const { reactive, effect, ref, computed, toRefs } = Vue;
+
+        // console.log(reactive, effect, ref, computed)
+        // const state = reactive({
+        //     name: '越祈',
+        //     age: 11,
+        //     a: {
+        //         a: 1
+        //     },
+        //     b: [1, 2, 3]
+        // })
+
+        // const state1 = reactive([1, 2, 4])
+
+        // // console.log()
+
+        // effect(() => {
+        //     app.innerHTML = state.name + '今年' + state.age + '岁了'
+        // })
+
+        // effect(() => {
+        //     app1.innerHTML = state1
+        // })
+
+        // // 当effect函数中依赖的数据发生变化， effect会重新执行
+        // setTimeout(() => {
+        //     // state.a.a = '今朝'
+        //     // state1[2] = 20
+        //     state1[10] = 1
+        // }, 1000)
+
+    </script>
+
+    <!-- vue渲染 -->
+    <script src="/dist/vue.js"></script>
+    <script>
+        let { createApp, h } = Vue
+
+        let App = {
+            setup() {
+                let state = reactive({
+                    flag: true
+                })
+
+                setTimeout(() => {
+                    state.flag = !state.flag
+                }, 2000)
+
+                return () => {
+                    return state.flag ?
+                        h('div',
+                            {
+                                style: { width: '200px', height: '200px' },
+                                a: 1
+                            },
+                            [
+                                h('li', { key: 'A', style: { background: '#cf0', } }, 'A'),
+                                h('li', { key: 'B', style: { background: '#0cf', } }, 'B'),
+                                h('li', { key: 'C', style: { background: '#f0c', } }, 'C'),
+                                h('li', { key: 'D', style: { background: '#fc0', } }, 'D'),
+                                h('li', { key: 'E', style: { background: '#fc0', } }, 'E'),
+                                h('li', { key: 'Q', style: { background: '#fc0', } }, 'Q'),
+                                h('li', { key: 'F', style: { background: '#fc0', } }, 'F'),
+                                h('li', { key: 'G', style: { background: '#fc0', } }, 'G'),
+                            ]
+                        )
+                        :
+                        h('div',
+                            {
+                                style: { width: '100px', height: '100px' },
+                            },
+                            [
+                                // h('li', {key: 'E', style: { background: '#0fc',} }, 'E'),
+
+                                h('li', { key: 'A', style: { background: '#cf0', } }, 'A'),
+                                h('li', { key: 'B', style: { background: '#0cf', } }, 'B'),
+                                h('li', { key: 'D', style: { background: '#fc0', } }, 'D'),
+                                h('li', { key: 'E', style: { background: '#fc0', } }, 'E'),
+                                h('li', { key: 'C', style: { background: '#f0c', } }, 'C'),
+                                h('li', { key: 'H', style: { background: '#fc0', } }, 'H'),
+                                h('li', { key: 'F', style: { background: '#fc0', } }, 'F'),
+                                h('li', { key: 'G', style: { background: '#fc0', } }, 'G'),
+
+
+                            ]
+                        )
+                }
+            }
+        }
+
+        /*
+        let App = {
+            setup() {
+                let state = reactive({
+                    name: "流溢",
+                    num: '111',
+                })
+
+                setTimeout(() => {
+                    state.name = "流溢风"
+                }, 1000)
+                return () => {
+                    return h('div', 
+                        {
+                            style: { background: '#0cf', width: '200px', height: '200px' },
+                        },
+                        state.name + ":" + state.num
+                    )
+                }
+            }
+        }
+        */
+
+        // 组件是怎么渲染的， 初始化流程
+        // vue3 runtime-dom runtime-core 核心
+        createApp(App).mount('#root')
+    </script>
+</body>
+
+</html>
